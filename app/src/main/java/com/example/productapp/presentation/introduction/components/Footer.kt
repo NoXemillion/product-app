@@ -1,6 +1,7 @@
 package com.example.productapp.presentation.introduction.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -46,6 +47,7 @@ fun Footer(
                 fontFamily = FontFamily(Font(R.font.monsterrat_semibold)),
                 color = Color.White
             )
+
         }
             else{
             TextStyle(
@@ -53,17 +55,22 @@ fun Footer(
                 fontFamily = FontFamily(Font(R.font.monsterrat_semibold)),
                 color = Color.Gray
             )
-        }
+        } ,
+            modifier = Modifier.clickable {
+                viewModel.prevPage()
+            }
         )
 
-        if(viewModel.pages.value == 1){
-            FirstPage()
-        }
-        else if(viewModel.pages.value == 2) {
-            SecondPage()
-        }
-        else{
-            ThirdPage()
+        when (viewModel.pages.value) {
+            1 -> {
+                FirstPage()
+            }
+            2 -> {
+                SecondPage()
+            }
+            else -> {
+                ThirdPage()
+            }
         }
 
         Text(text = if(viewModel.pages.value != 3) {
@@ -74,7 +81,10 @@ fun Footer(
             fontSize = 18.sp,
             fontFamily = FontFamily(Font(R.font.monsterrat_semibold)),
             color = RedPink
-        )
+        ) , modifier = Modifier.clickable {
+
+            viewModel.nextPage()
+        }
         )
     }
 }

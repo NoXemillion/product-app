@@ -24,25 +24,37 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.productapp.R
 import com.example.productapp.common.Constance
+import com.example.productapp.presentation.cloth_list.ClothViewModel
 
 @Composable
-fun CenterComponent() {
+fun CenterComponent(viewModel: ClothViewModel = hiltViewModel()) {
 
     Column(modifier = Modifier.padding(bottom = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         Image(
-            painter = painterResource(R.drawable.fashion_image1) ,
-            contentDescription = "fashion_image_1")
+            painter =
+            when(viewModel.pages.value){
+                1 -> painterResource(R.drawable.fashion_image1)
+                2 -> painterResource(R.drawable.fashion_image2)
+                else -> painterResource(R.drawable.fashion_image3)
+            },
+            contentDescription = "fashion_image")
 
         Spacer(modifier = Modifier.height(40.dp))
 
         Column(modifier = Modifier.fillMaxWidth()){
             Row(modifier = Modifier.fillMaxWidth() ,
                 horizontalArrangement = Arrangement.Center) {
-                Text(text = Constance.choose_products ,
+                Text(text =
+                    when(viewModel.pages.value){
+                        1 -> Constance.choose_products
+                        2 -> Constance.make_payment
+                        else -> Constance.get_order
+                    },
                     style = TextStyle(
                         fontSize = 24.sp,
                         color = Color.Black,
@@ -51,7 +63,12 @@ fun CenterComponent() {
                 )
             }
             Spacer(modifier = Modifier.height(20.dp))
-            Text(text = Constance.products_desc , style = TextStyle(
+            Text(text =
+                when(viewModel.pages.value){
+                    1 -> Constance.products_desc
+                    2 -> Constance.payment_desc
+                    else -> Constance.order_desc
+                }, style = TextStyle(
                 fontSize = 14.sp ,
                 color = Color.Gray,
                 fontFamily = FontFamily(Font(R.font.monsterrat_semibold)) ,

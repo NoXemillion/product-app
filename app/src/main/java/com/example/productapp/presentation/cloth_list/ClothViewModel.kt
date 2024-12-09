@@ -32,10 +32,14 @@ class ClothViewModel @Inject constructor(
         fetchClothData()
     }
 
-    fun incrementPages() {
-        pages.value++
-        if(pages.value > 3){
-            pages.value = 1
+    fun nextPage() {
+        if(pages.value != 3){
+            pages.value++
+        }
+    }
+    fun prevPage() {
+        if(pages.value != 1){
+            pages.value--
         }
     }
 

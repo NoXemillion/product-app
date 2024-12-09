@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -22,18 +23,19 @@ import com.example.productapp.presentation.ui.theme.WhiteGray1
 fun FirstPage() {
 
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically){
+        verticalAlignment = Alignment.Bottom,
+        modifier = Modifier.padding(top = 7.dp)){
         Box(
             modifier = Modifier
                 .width(55.dp)
-                .height(12.dp)
+                .height(10.dp)
                 .clip(RoundedCornerShape(14.dp))
                 .background(Color.Black)
         )
         repeat(2) {
             Box(
                 modifier = Modifier
-                    .size(12.dp)
+                    .size(10.dp)
                     .clip(CircleShape)
                     .background(color = WhiteGray1)
             )
