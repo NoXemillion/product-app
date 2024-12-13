@@ -6,6 +6,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
     id("androidx.room")
+    id("com.google.gms.google-services")
 
 
 }
@@ -65,10 +66,23 @@ kapt {
 }
 
 dependencies {
+
+    // Credentials
+    implementation("androidx.credentials:credentials:1.5.0-beta01")
+    implementation("androidx.credentials:credentials-play-services-auth:1.5.0-beta01")
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.google.firebase.auth.ktx)
+
+
     // NavHost
     implementation("androidx.navigation:navigation-compose:2.8.4")
     implementation("androidx.navigation:navigation-fragment-ktx:2.8.4")
     implementation("androidx.navigation:navigation-ui-ktx:2.8.4")
+    implementation(libs.google.googleid)
 
     // Room DB
     val room_version = "2.6.1"
@@ -80,12 +94,10 @@ dependencies {
     ksp("androidx.room:room-compiler:$room_version")
 
     // Dagger-Hilt
-    
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-compiler:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
-
     kapt("androidx.hilt:hilt-compiler:1.2.0")
 
     // Retrofit

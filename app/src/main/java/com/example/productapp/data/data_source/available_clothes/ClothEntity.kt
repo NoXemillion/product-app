@@ -1,4 +1,4 @@
-package com.example.productapp.data.data_source
+package com.example.productapp.data.data_source.available_clothes
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

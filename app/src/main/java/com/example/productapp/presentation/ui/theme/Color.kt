@@ -12,3 +12,14 @@ val Pink40 = Color(0xFF7D5260)
 
 val RedPink = Color(0xFFF83758)
 val WhiteGray1 = Color(0xAECDCDCD)
+
+val authGray = Color(0xFFA8A8A9)
+val emailPasswordGray = Color(0xFF626262)
+val emailPasswordBackgroundGray = Color(0xFFF3F3F3)
+val emailPasswordBorderColor = Color(0xFFA8A8A9)
+
+val AuthRedPink = Color(0xFFF83758)
+val Gray2 = Color(0xFF575757)
+
+val GoogleInsideColor = Color(0xFFFCF3F6)
+val Gray3 = Color(0xFF676767)

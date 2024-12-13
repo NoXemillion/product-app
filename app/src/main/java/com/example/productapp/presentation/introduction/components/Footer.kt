@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.productapp.R
 import com.example.productapp.presentation.cloth_list.ClothViewModel
 import com.example.productapp.presentation.introduction.components.footer_components.FirstPage
@@ -31,6 +32,7 @@ import com.example.productapp.presentation.ui.theme.RedPink
 
 @Composable
 fun Footer(
+    navController: NavController,
     viewModel : ClothViewModel = hiltViewModel()
 ) {
 
@@ -82,8 +84,12 @@ fun Footer(
             fontFamily = FontFamily(Font(R.font.monsterrat_semibold)),
             color = RedPink
         ) , modifier = Modifier.clickable {
+            if(viewModel.pages.value == 3){
+                navController.navigate("registerPage")
+            }else{
+                viewModel.nextPage()
+            }
 
-            viewModel.nextPage()
         }
         )
     }

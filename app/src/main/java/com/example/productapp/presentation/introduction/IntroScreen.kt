@@ -43,11 +43,11 @@ fun IntroScreen(
     Column(modifier = Modifier.fillMaxSize().padding(30.dp),
         verticalArrangement = Arrangement.SpaceBetween){
 
-        Header(viewModel)
+        Header(navController ,viewModel)
 
         CenterComponent()
 
-        Footer(viewModel)
+        Footer(navController, viewModel)
     }
 
 

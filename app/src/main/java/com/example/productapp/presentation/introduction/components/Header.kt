@@ -17,12 +17,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.productapp.R
 import com.example.productapp.presentation.cloth_list.ClothViewModel
 
 
 @Composable
-fun Header(viewModel : ClothViewModel = hiltViewModel()) {
+fun Header(navController: NavController,
+    viewModel : ClothViewModel = hiltViewModel()) {
     Row(modifier = Modifier.fillMaxWidth() ,
         horizontalArrangement = Arrangement.SpaceBetween){
 
@@ -57,7 +59,7 @@ fun Header(viewModel : ClothViewModel = hiltViewModel()) {
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily(Font(R.font.monsterrat_semibold)),)
             , modifier = Modifier.clickable {
-
+                navController.navigate("loginPage")
             }
         )
     }

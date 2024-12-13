@@ -1,7 +1,7 @@
 package com.example.productapp.di
 
 import com.example.productapp.common.Constance
-import com.example.productapp.data.data_source.ClothDao
+import com.example.productapp.data.data_source.available_clothes.ClothDao
 import com.example.productapp.data.remote.ClothApi
 import com.example.productapp.data.repository.ClothRepositoryImpl
 import com.example.productapp.domain.repository.ClothRepository

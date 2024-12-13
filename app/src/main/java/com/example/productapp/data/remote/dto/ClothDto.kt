@@ -1,7 +1,7 @@
 package com.example.productapp.data.remote.dto
 
 
-import com.example.productapp.data.data_source.ClothEntity
+import com.example.productapp.data.data_source.available_clothes.ClothEntity
 import com.example.productapp.domain.model.Cloth
 import com.example.productapp.domain.model.ClothDetail
 import kotlinx.serialization.SerialName
