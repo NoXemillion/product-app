@@ -29,6 +29,9 @@ fun EmailVerificationPage(
     navController: NavController,
     viewModel : AuthorizationViewModel = hiltViewModel()
 ) {
+//    viewModel._isVerified.value = viewModel.authRepository.auth.currentUser?.isEmailVerified == true
+
+
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(30.dp),

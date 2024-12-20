@@ -40,8 +40,11 @@ fun LoginButton(
         .clickable {
             if(viewModel.loginChecking()){
                 CoroutineScope(Dispatchers.IO).launch {
-                    viewModel.loginByEmailAndPassword()
-                    navController.navigate("")
+                    if(viewModel.loginByEmailAndPassword()){
+                        CoroutineScope(Dispatchers.Main).launch {
+                            navController.navigate("getStartedScreen")
+                        }
+                    }
                 }
             }
         },

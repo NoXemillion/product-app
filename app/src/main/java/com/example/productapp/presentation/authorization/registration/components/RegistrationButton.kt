@@ -48,16 +48,17 @@ fun RegistrationButton(
         .clickable {
             Log.d("TAG" , viewModel.registrChecking().toString())
             if(viewModel.registrChecking()){
-                Log.d("TAG" , "1 This side is working")
                 CoroutineScope(Dispatchers.IO).launch {
-                    Log.d("TAG" , "2 This side is working")
                     result = viewModel.registerByEmailAndPassword()
-                    Log.d("TAG" , "RESULT : ${result.toString()}")
                     if(result) {
                         withContext(Dispatchers.Main){
                             navController.navigate("verificationPage")
                         }
-
+                        if(viewModel.checkingVerification()){
+                            withContext(Dispatchers.Main){
+                                navController.navigate("loginPage")
+                            }
+                        }
                     }
                 }
 

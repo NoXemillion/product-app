@@ -1,4 +1,4 @@
-package com.example.productapp.presentation.cloth_list
+package com.example.productapp.presentation.main_content.cloth_list
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
@@ -7,9 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.productapp.common.Resource
-import com.example.productapp.data.remote.ClothApi
 import com.example.productapp.domain.model.Cloth
-import com.example.productapp.domain.repository.ClothRepository
 import com.example.productapp.domain.use_case.get_clothes.GetClothUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

@@ -23,3 +23,9 @@ val Gray2 = Color(0xFF575757)
 
 val GoogleInsideColor = Color(0xFFFCF3F6)
 val Gray3 = Color(0xFF676767)
+val Gray4 = Color(0xFFF2F2F2)
+
+val Red2 = Color(0xFFEB3030)
+val mainBackgroundColor = Color(0xFFFDFDFD)
+
+val Gray5 = Color(0xFFBBBBBB)

@@ -14,8 +14,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class AuthRepository @Inject constructor(
-    private val firebaseAuth: FirebaseAuth,
-    private val userDao: UserDao
+    private val firebaseAuth: FirebaseAuth
 ) {
     var auth = firebaseAuth
     var verificationSend = mutableStateOf(false)
@@ -74,13 +73,14 @@ class AuthRepository @Inject constructor(
 
     suspend fun login(
         email : String , password: String
-    ) : Boolean {
+    ):Boolean {
 
         try {
             val result = suspendCoroutine { continuation ->
 
                 auth.signInWithEmailAndPassword(email , password)
                     .addOnSuccessListener {
+                        Log.d("TAG" , "Login success")
                         continuation.resume(true)
                     }
                     .addOnFailureListener{
@@ -96,6 +96,33 @@ class AuthRepository @Inject constructor(
             Log.d("TAG" , "AuthRepository: ${e.message}")
             return false
         }
+    }
+
+    suspend fun resetPassword(
+        email : String
+    ):Boolean{
+        try {
+            val result = suspendCoroutine { continuation ->
+                auth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener{ task ->
+                        if(task.isSuccessful){
+                            continuation.resume(true)
+                        }
+                        else {
+                            continuation.resume(false)
+                            Log.d("TAG" , task.exception.toString())
+                        }
+                    }
+            }
+            return result
+        }
+        catch(e : Exception){
+            e.printStackTrace()
+            if(e is CancellationException) throw e
+            Log.d("TAG" , "Reset Password : ${e.message}")
+            return false
+        }
+
     }
 
 

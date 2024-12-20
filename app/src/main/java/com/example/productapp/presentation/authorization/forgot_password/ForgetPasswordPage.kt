@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.productapp.R
 import com.example.productapp.presentation.authorization.AuthorizationViewModel
+import com.example.productapp.presentation.authorization.common_components.ErrorScreen
 import com.example.productapp.presentation.authorization.forgot_password.components.EmailSenderField
 import com.example.productapp.presentation.authorization.forgot_password.components.SubmitButton
 import com.example.productapp.presentation.ui.theme.AuthRedPink
@@ -32,8 +33,8 @@ import com.example.productapp.presentation.ui.theme.Gray3
 
 @Composable
 fun ForgetPasswordPage(
-    viewModel : AuthorizationViewModel = hiltViewModel(),
-    navController : NavController
+    navController : NavController,
+    viewModel : AuthorizationViewModel = hiltViewModel()
 ) {
 
     Column(modifier = Modifier
@@ -55,6 +56,8 @@ fun ForgetPasswordPage(
                 color = Color.Black,
             )
             )
+            Spacer(modifier = Modifier.height(5.dp))
+            ErrorScreen()
         }
         Spacer(modifier = Modifier.height(30.dp))
         EmailSenderField(viewModel)
@@ -91,7 +94,7 @@ fun ForgetPasswordPage(
         ))
 
         Spacer(modifier = Modifier.height(30.dp))
-        SubmitButton(viewModel)
+        SubmitButton(navController)
 
 
 

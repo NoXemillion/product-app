@@ -1,5 +1,6 @@
 package com.example.productapp.presentation.authorization.common_components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,10 +37,14 @@ import com.example.productapp.presentation.authorization.AuthorizationViewModel
 import com.example.productapp.presentation.ui.theme.AuthRedPink
 import com.example.productapp.presentation.ui.theme.GoogleInsideColor
 import com.example.productapp.presentation.ui.theme.Gray2
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun GoogleAuthScreen(
+fun GoogleAuthScreen (
     viewModel : AuthorizationViewModel = hiltViewModel(),
     navController: NavController
 ) {
@@ -72,6 +77,18 @@ fun GoogleAuthScreen(
             ) {
                 IconButton(
                     onClick = {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            viewModel.setSignedButton(true)
+                        }
+                        var result = viewModel.signedButton.value
+                        Log.d("TAG" , "Icon working $result")
+                        CoroutineScope(Dispatchers.IO).launch {
+                            if(viewModel.isSignedInByGoogle.value){
+                                CoroutineScope(Dispatchers.Main).launch{
+                                    navController.navigate("getStartedScreen")
+                                }
+                            }
+                        }
 
                     }
                 ) {

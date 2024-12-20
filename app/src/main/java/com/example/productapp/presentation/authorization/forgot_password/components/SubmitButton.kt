@@ -18,12 +18,17 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.productapp.R
 import com.example.productapp.presentation.authorization.AuthorizationViewModel
 import com.example.productapp.presentation.ui.theme.AuthRedPink
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
-fun SubmitButton(viewModel : AuthorizationViewModel = hiltViewModel()) {
+fun SubmitButton(navController: NavController,
+    viewModel : AuthorizationViewModel = hiltViewModel()) {
 
     viewModel.buttonText.value = "Submit"
     Box(modifier = Modifier
@@ -32,12 +37,15 @@ fun SubmitButton(viewModel : AuthorizationViewModel = hiltViewModel()) {
         .clip(RoundedCornerShape(4.dp))
         .background(AuthRedPink)
         .clickable {
-//            if(viewModel.password.value == viewModel.confirmPassword.value){
-//
-//            }
-//            else{
-//                viewModel.confirmErrorMessage.value = true
-//            }
+            if(viewModel.resetPasswordChecking(viewModel.email.value)){
+                CoroutineScope(Dispatchers.IO).launch{
+                    if(viewModel.resetPassword(viewModel.email.value)){
+                        CoroutineScope(Dispatchers.Main).launch {
+                            navController.navigate("loginPage")
+                        }
+                    }
+                }
+            }
         },
         contentAlignment = Alignment.Center){
 

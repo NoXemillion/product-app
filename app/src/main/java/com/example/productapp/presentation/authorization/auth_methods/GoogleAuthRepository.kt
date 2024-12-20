@@ -9,6 +9,7 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import com.example.productapp.data.data_source.user_info.UserDao
 import com.example.productapp.data.data_source.user_info.UserEntity
+import com.example.productapp.presentation.MainActivity
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
@@ -19,27 +20,34 @@ import javax.inject.Inject
 
 
 class GoogleAuthRepository @Inject constructor(
-    private val activity : Activity ,
     private val firebaseAuth: FirebaseAuth ,
     private val userDao : UserDao
 ) {
-    private val tag = "GoogleAuthClient : "
-    private val credentialManager = CredentialManager.create(activity)
+
+    lateinit var credentialManager: CredentialManager
+
+    fun initialize(activity: Activity) {
+        credentialManager = CredentialManager.create(activity)
+    }
 
     fun isSignedIn() : Boolean {
         if(firebaseAuth.currentUser != null) {
+            Log.d("TAG" , firebaseAuth.currentUser?.displayName.toString())
             return true
         }
         return false
     }
 
-    suspend fun signIn() : Boolean {
+
+    suspend fun signIn(activity : Activity) : Boolean {
         if(isSignedIn()){
+            Log.d("TAG" , "isSignedIn working")
             return true
         }
 
         try {
-            val result = buildCredentialRequest()
+            Log.d("TAG" , "buildCredentialRequest working")
+            val result = buildCredentialRequest(activity)
             return handleSignIn(result)
         }
         catch(e : Exception){
@@ -50,7 +58,7 @@ class GoogleAuthRepository @Inject constructor(
         }
     }
 
-    private suspend fun buildCredentialRequest() : GetCredentialResponse {
+    private suspend fun buildCredentialRequest(activity : Activity) : GetCredentialResponse {
         val request = GetCredentialRequest.Builder()
             .addCredentialOption(
                 GetGoogleIdOption.Builder()

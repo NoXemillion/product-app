@@ -1,20 +1,37 @@
 package com.example.productapp.presentation.authorization
 
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.productapp.R
+import com.example.productapp.presentation.MainActivity
 import com.example.productapp.presentation.authorization.auth_methods.AuthRepository
+import com.example.productapp.presentation.authorization.auth_methods.GoogleAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 @HiltViewModel
 class AuthorizationViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository ,
+    private val googleAuthRepository: GoogleAuthRepository
 ) : ViewModel() {
 
     var email = mutableStateOf("")
@@ -33,7 +50,14 @@ class AuthorizationViewModel @Inject constructor(
     var loginError = mutableStateOf(false)
     var registerError = mutableStateOf(false)
     var emailVerificationError = mutableStateOf(authRepository.emailVerificationError.value)
-    var verificationMessageSend = mutableStateOf(authRepository.verificationSend.value)
+
+    var isSignedInByGoogle = mutableStateOf(false);
+
+    val _signedButton = MutableStateFlow(false)
+    val signedButton: StateFlow<Boolean> = _signedButton
+
+    var resetPassword = mutableStateOf(false)
+
 
     fun validateEmail(email: String):Boolean {
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
@@ -41,6 +65,17 @@ class AuthorizationViewModel @Inject constructor(
     }
 
 
+    suspend fun checkingVerification() : Boolean {
+        repeat(1000) {
+            authRepository.auth.currentUser?.reload()?.await()
+            if (authRepository.auth.currentUser?.isEmailVerified == true) {
+                return true
+            }
+            delay(1000L)
+        }
+        Log.d("TAG" , "Email isn't verified!")
+        return false
+    }
 
     suspend fun checkIfUserDoesntExist(
         email : String
@@ -76,16 +111,63 @@ class AuthorizationViewModel @Inject constructor(
         }
     }
 
-    suspend fun loginByEmailAndPassword(){
-        if(checkIfUserDoesntExist(email.value)){
-            authRepository.login(email.value , password.value)
+    fun setSignedButton(value:Boolean) {
+        Log.d("TAG", "setSignedButton called with value: $value")
+        _signedButton.value = value
+    }
+
+    suspend fun signInByGoogle(activity: Activity):Boolean {
+        googleAuthRepository.initialize(activity)
+        var result = googleAuthRepository.signIn(activity)
+        if(result){
+            isSignedInByGoogle.value = true
+            return true;
         }
-        else{
-            loginError.value = true
+        else {
+            isSignedInByGoogle.value = false
+            return false
         }
     }
 
-    suspend fun registerByEmailAndPassword() : Boolean{
+    suspend fun signOutByGoogle(activity : Activity){
+        googleAuthRepository.initialize(activity)
+        googleAuthRepository.signOut()
+    }
+
+    suspend fun resetPassword(email : String):Boolean {
+        if(!checkIfUserDoesntExist(email)){
+            if(authRepository.resetPassword(email)){
+                return true
+            }
+            else{
+                emailVerificationError.value = true
+                return false
+            }
+        }
+        else {
+            emailVerificationError.value = true
+            return false
+        }
+    }
+
+    suspend fun loginByEmailAndPassword():Boolean{
+        if(!checkIfUserDoesntExist(email.value)){
+            if(authRepository.login(email.value , password.value)){
+                return true
+            }
+            else{
+                loginError.value = true
+                return false
+            }
+        }
+        else{
+            loginError.value = true
+            return false
+        }
+    }
+
+
+    suspend fun registerByEmailAndPassword():Boolean{
         if(checkIfUserDoesntExist(email.value)){
             var result = authRepository.register(email.value , password.value)
             if(result){
@@ -102,7 +184,24 @@ class AuthorizationViewModel @Inject constructor(
             return false
         }
     }
+    fun resetPasswordChecking(email : String):Boolean {
+        when {
+            email.isBlank() -> {
+                blankError.value = true
+                emailValidationError.value = false
+                return false
+            }
+            !validateEmail(email) -> {
+                emailValidationError.value = true
+                blankError.value = false
+                return false
+            }
+            else -> {
+                return true
+            }
+        }
 
+    }
     fun registrChecking():Boolean {
         when {
             password.value.length < 8 || confirmPassword.value.length < 8 -> {
@@ -175,7 +274,13 @@ class AuthorizationViewModel @Inject constructor(
                 blankError.value = false
                 return false
             }
-
+            loginError.value -> {
+                loginError.value = true
+                emailValidationError.value = false
+                passwordLengthError.value = false
+                blankError.value = false
+                return false
+            }
             else -> {
                 return true
             }

@@ -73,7 +73,7 @@ fun LoginPage(navController: NavController,
                 color = AuthRedPink
             ),
                 modifier = Modifier.clickable {
-
+                    navController.navigate("forgotPassword")
                 }
             )
         }
