@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.productapp.R
 import com.example.productapp.presentation.ui.theme.AuthRedPink
 import com.example.productapp.presentation.ui.theme.Gray4
@@ -37,8 +38,9 @@ import com.example.productapp.presentation.ui.theme.Gray4
 
 @Composable
 fun GetStartedScreen(
-    navController: NavController
+    navController: NavHostController
 ) {
+
     Box(modifier = Modifier.fillMaxSize()){
         Image(
             painter = painterResource(R.drawable.get_started_background) ,
@@ -106,7 +108,7 @@ fun GetStartedScreen(
                     .clip(RoundedCornerShape(4.dp))
                     .background(AuthRedPink)
                     .clickable {
-
+                        navController.navigate("navigation")
                     },
                     contentAlignment = Alignment.Center){
 

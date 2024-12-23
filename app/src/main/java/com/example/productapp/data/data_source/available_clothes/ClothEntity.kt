@@ -5,12 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity
+@Entity(tableName = "clothes")
 data class ClothEntity(
     @PrimaryKey(autoGenerate = true)
-    val id : Int,
-    @ColumnInfo(name = "title") val title : String ,
-    @ColumnInfo(name = "price") val price : Int,
-    @ColumnInfo(name = "category") val categoryId : Int
+    var id : Int,
+    @ColumnInfo(name = "title") var title : String ,
+    @ColumnInfo(name = "price") var price : Int,
+    @ColumnInfo(name = "category") var categoryId : Int
 )
 

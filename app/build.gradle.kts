@@ -66,6 +66,8 @@ kapt {
 }
 
 dependencies {
+    // Coil
+    implementation(libs.coil.compose)
 
     // Credentials
     implementation("androidx.credentials:credentials:1.5.0-beta01")

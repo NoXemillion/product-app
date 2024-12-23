@@ -26,6 +26,9 @@ val Gray3 = Color(0xFF676767)
 val Gray4 = Color(0xFFF2F2F2)
 
 val Red2 = Color(0xFFEB3030)
-val mainBackgroundColor = Color(0xFFFDFDFD)
+val mainBackgroundColor = Color(0xFFF3F3F3)
 
 val Gray5 = Color(0xFFBBBBBB)
+val Purple1 = Color(0xFF21003D)
+
+val Blue1 = Color(0xFF4392F9)

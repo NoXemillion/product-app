@@ -21,7 +21,10 @@ object RoomModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context : Context) : ClothDatabase {
-        return Room.databaseBuilder(context , ClothDatabase::class.java , "cloth_database").build()
+        return Room
+            .databaseBuilder(context , ClothDatabase::class.java , "cloth_database")
+            .build()
+
     }
 
     @Provides

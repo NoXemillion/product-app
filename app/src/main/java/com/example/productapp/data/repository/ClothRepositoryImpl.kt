@@ -1,5 +1,6 @@
 package com.example.productapp.data.repository
 
+import android.util.Log
 import com.example.productapp.data.data_source.available_clothes.ClothDao
 import com.example.productapp.data.remote.ClothApi
 import com.example.productapp.data.remote.dto.ClothDto
@@ -18,6 +19,7 @@ class ClothRepositoryImpl @Inject constructor(
             clothesFromApi.forEach{ item ->
                 clothDao.insertCloth(item.toClothEntity())
             }
+            Log.d("TAG" , clothesFromApi.toString())
             return clothesFromApi
 
         }

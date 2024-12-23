@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.productapp.R
-import com.example.productapp.presentation.main_content.cloth_list.ClothViewModel
+import com.example.productapp.presentation.introduction.ClothViewModel
 
 
 @Composable

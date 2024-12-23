@@ -58,8 +58,7 @@ class MainActivity : AppCompatActivity() {
             ProductAppTheme {
                 Surface {
                     val navController = rememberNavController()
-                    NavigationScreen(navController)
-                    NavHost(navController = navController , startDestination = "navigation"){
+                    NavHost(navController = navController , startDestination = "logoScreen"){
                         composable("introScreen") { IntroScreen(navController = navController) }
                         composable("logoScreen") { LogoScreen(navController) }
                         composable("loginPage") { LoginPage(navController) }

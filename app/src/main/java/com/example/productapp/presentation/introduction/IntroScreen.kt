@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.productapp.presentation.main_content.cloth_list.ClothViewModel
 import com.example.productapp.presentation.introduction.components.CenterComponent
 import com.example.productapp.presentation.introduction.components.Footer
 import com.example.productapp.presentation.introduction.components.Header

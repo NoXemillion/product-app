@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.productapp.R
 import com.example.productapp.common.Constance
-import com.example.productapp.presentation.main_content.cloth_list.ClothViewModel
+import com.example.productapp.presentation.introduction.ClothViewModel
 
 @Composable
 fun CenterComponent(viewModel: ClothViewModel = hiltViewModel()) {

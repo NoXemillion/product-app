@@ -2,6 +2,7 @@ package com.example.productapp.domain.use_case.get_clothes
 
 import android.util.Log
 import com.example.productapp.common.Resource
+import com.example.productapp.data.remote.dto.ClothDto
 import com.example.productapp.data.remote.dto.toCloth
 import com.example.productapp.data.remote.dto.toClothEntity
 import com.example.productapp.data.repository.ClothRepositoryImpl
@@ -23,9 +24,10 @@ class GetClothUseCase @Inject constructor(
         try {
             emit(Resource.Loading())
             val clothes = withContext(Dispatchers.IO){
-                repository.getClothes().map { it.toCloth() }
+                repository.getClothes().map{it.toCloth()}
             }
             emit(Resource.Success(clothes))
+            Log.d("TAG4" , repository.getClothes().map{it.toCloth()}.toString())
 
         } catch (e: Exception) {
             Log.d("TAG1" , e.toString())

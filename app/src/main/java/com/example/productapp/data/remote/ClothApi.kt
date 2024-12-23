@@ -7,7 +7,7 @@ import retrofit2.http.Path
 interface ClothApi{
 
     @GET("products")
-    suspend fun getClothes() : List<ClothDto>
+    suspend fun getClothes() : ArrayList<ClothDto>
 
     @GET("products/{id}")
     suspend fun getClothById(@Path("id") id : Int) : ClothDto

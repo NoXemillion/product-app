@@ -11,6 +11,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,20 +28,24 @@ import androidx.navigation.NavHostController
 import com.example.productapp.R
 import com.example.productapp.presentation.main_content.ContentViewModel
 import com.example.productapp.presentation.ui.theme.Gray5
+import com.example.productapp.presentation.ui.theme.emailPasswordBackgroundGray
 
 
 @Composable
 fun Search(
-    navController: NavHostController,
+    localNavController: NavHostController,
     viewModel : ContentViewModel = hiltViewModel()
 ) {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .height(45.dp)
-        .background(Color.White)
-        .clip(RoundedCornerShape(4.dp)))
+        .height(50.dp)
+        .clip(RoundedCornerShape(8.dp))
+        .background(Color.White))
     {
         TextField(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
             value = viewModel.searchField.value,
             onValueChange = {newValue -> viewModel.searchField.value = newValue},
             placeholder = {Text(text = "Search any product.." , style = TextStyle(
@@ -54,7 +60,18 @@ fun Search(
                     tint = Gray5
                 )
             },
-            modifier = Modifier.fillMaxSize()
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                cursorColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White
+            ),
+            textStyle = TextStyle(
+                fontFamily = FontFamily(Font(R.font.monsterrat_regular)),
+                fontSize = 15.sp,
+                color = Color.Black
+            )
         )
     }
 }

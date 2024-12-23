@@ -22,7 +22,7 @@ import com.example.productapp.presentation.ui.theme.mainBackgroundColor
 
 @Composable
 fun Header(
-    navController: NavHostController
+    localNavController: NavHostController
 ) {
     Row(modifier = Modifier
         .fillMaxWidth()
